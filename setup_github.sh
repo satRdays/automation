@@ -1,6 +1,7 @@
 username=$1
 password=$2
 repo_name=$3
+add_user=$4
 
 # test -z $repo_name && echo "Repo name required." 1>&2 && exit 1
 
@@ -12,6 +13,9 @@ curl --user $username:$password https://api.github.com/orgs/satRdays/teams -d "{
 
 # assign team to repo
 curl --user $username:$password -X PUT https://api.github.com/orgs/satRdays/teams/$repo_name/repos/satRdays/$repo_name -d "{\"permission\":\"admin\"}"
+
+# Add a new user to the team currently WIP
+curl --user $username:$password -X PUT https://api.github.com/orgs/satRdays/teams/$repo_name/memberships/$add_user -d "{\"role\":\"maintainer\"}"
 
 # Populate repo
 git clone --bare https://github.com/satRdays/satRday_site_template
