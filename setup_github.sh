@@ -9,7 +9,7 @@ add_user=$4
 curl --user $username:$password https://api.github.com/orgs/satRdays/repos -d "{\"name\":\"$repo_name\", \"description\":\"satRdays website for the $repo_name event\"}"
 
 # Create team
-curl --user $username:$password https://api.github.com/orgs/satRdays/teams -d "{\"name\":\"$repo_name\", \"description\":\"satRdays team for the $repo_name event\"}"
+curl --user $username:$password https://api.github.com/orgs/satRdays/teams -d "{\"name\":\"$repo_name\", \"description\":\"satRdays team for the $repo_name event\", \"privacy\":\"closed\"}"
 
 # assign team to repo
 curl --user $username:$password -X PUT https://api.github.com/orgs/satRdays/teams/$repo_name/repos/satRdays/$repo_name -d "{\"permission\":\"admin\"}"
@@ -25,3 +25,4 @@ git push --mirror https://github.com/satRdays/$repo_name.git
 # Clean up
 cd ..
 rm -rf satRday_site_template.git
+curl --user $username:$password -X DELETE https://api.github.com/orgs/satRdays/teams/$repo_name/memberships/$username
